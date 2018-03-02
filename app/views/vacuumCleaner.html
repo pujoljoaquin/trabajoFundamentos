@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-xs-8">
+
+    <div class="container" style="background-color:transparent;">
+      <p class="texto">La aspiradora está diseñada para limpiar las baldosas de una determinada superficie. Cada baldosa puede estar limpia o sucia. Automáticamente y de manera aleatoria se definen las baldosas que estarán sucias. Además, haciendo click sobre cualquier de ellas se la ensucia.</p>
+
+      <p class="texto" ng-show="!aspiradoraHabilitada">Por favor seleccione el tamaño de la superficie sobre la que trabajara la aspiradora.</p>
+
+      <div class="panel panel-info" ng-show="!aspiradoraHabilitada">
+          <div class="panel-heading">
+              <div class="panel-title">Tamaño de la superficie</div>
+          </div>
+          <div class="panel-body">
+              <form class="search-form" name="tamanoTablaForm" novalidate>
+                  <div class="row">
+                      <div class="col-xs-6">
+                          <div class="form-group" ng-class="{'has-error':tamanoTablaForm.numberOfRows.$invalid && tamanoTablaForm.$submitted}">
+                              <label for="numberOfRows">Cantidad de filas</label>
+                              <input type="number" class="form-control" name="numberOfRows" ng-model="numberOfRows" min=2 max=6 required>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-xs-6">
+                          <div class="form-group" ng-class="{'has-error':tamanoTablaForm.numberOfColumns.$invalid && tamanoTablaForm.$submitted}">
+                              <label for="numberOfColumns">Cantidad de columnas</label>
+                              <input type="number" class="form-control" name="numberOfColumns" ng-model="numberOfColumns" min=2 max=5 required>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-xs-6">
+                          <div>
+                              <button type="submit" class="btn btn-info btn-form" ng-click="comenzarAspiradora()"> Prender aspiradora </button>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+      <table class="table table-bordered center" ng-show="aspiradoraHabilitada" style="opacity:0.7;">
+        <tbody>
+          <tr ng-repeat="row in cells">
+            <td width=50px height=60px ng-repeat="piso in row" style="text-align: center;" data-ng-click="clickCell(piso)" ng-class="{{'piso.estado'}}">
+              <img src="./images/aspiradora3.png" height=40px width=30px ng-show="piso.analizando" syle="opacity:0.5;"></img>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="col-xs-4">
+        <img src="./images/aspiradora3.png" height=350px width=250px class="imagenAspiradora"></img>
+        <p class="estadoAspiradora bold">{{accionActualAspiradora}}</p>
+        <p class="cantidadBaldosas bold" ng-show="aspiradoraHabilitada">Ya se han limpiado {{cantidadBaldosasLimpiadas}} baldosas en</p>
+        <p class="cantidadBaldosasSegundos bold" ng-show="aspiradoraHabilitada">{{clock}} segundos</p>
+        <button type="submit" class="btn btn-info btn-form botonDetenerAspiradora" ng-click="detenerAspiradora()" ng-show="aspiradoraHabilitada"> Apagar aspiradora </button>
+  </div>
+
+</div>
